@@ -38,7 +38,7 @@ import org.projog.core.predicate.PredicateKey;
 import org.projog.core.predicate.builtin.kb.AddPredicateFactory;
 import org.projog.core.term.Atom;
 import org.projog.core.term.IntegerNumber;
-import org.projog.core.term.Structure;
+import org.projog.core.term.StructureFactory;
 import org.projog.core.term.Term;
 
 /** Generates HTML page listing alphabetically ordered index of all built-in predicates. */
@@ -91,7 +91,7 @@ final class BuiltInPredicatesIndexPage {
    private static List<Term> getCommands() {
       List<Term> result = new ArrayList<>();
       // ensure that pj_add_predicate/2 appears in the index even though it isn't in the bootstrap file (it is the one predicate that is hardcoded).
-      result.add(Structure.createStructure(ADD_PREDICATE_KEY.getName(), new Term[] {ADD_PREDICATE_KEY.toTerm(), new Atom(AddPredicateFactory.class.getName())}));
+      result.add(StructureFactory.createStructure(ADD_PREDICATE_KEY.getName(), new Term[] {ADD_PREDICATE_KEY.toTerm(), new Atom(AddPredicateFactory.class.getName())}));
       Term[] terms = parseTermsFromFile(BOOTSTRAP_FILE);
       for (Term next : terms) {
          if (QUESTION_PREDICATE_NAME.equals(next.getName())) {
