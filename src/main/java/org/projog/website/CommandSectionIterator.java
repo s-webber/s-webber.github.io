@@ -83,7 +83,7 @@ final class CommandSectionIterator {
    private String getPackageDescription(String packageName) {
       String description = packageDescriptions.get(packageName);
       if (description == null) {
-         throw new RuntimeException("Cannot find description for: " + packageName);
+         throw new RuntimeException("Cannot find description for: " + packageName + " in " + packageDescriptions.keySet());
       }
       return description;
    }

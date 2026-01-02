@@ -31,6 +31,7 @@ import org.projog.core.term.Term;
 
 /** Constants and utility methods used in the build process. */
 final class WebsiteUtils {
+   private static final File PROJOG_MASTER = new File("build/projog-master");
    static final PredicateKey ADD_PREDICATE_KEY = new PredicateKey("pj_add_predicate", 2);
    static final PredicateKey ADD_CALCULATABLE_KEY = new PredicateKey("pj_add_calculatable", 2);
    static final String BUILTIN_PREDICATES_PACKAGE_NAME = "org.projog.core.predicate.builtin";
@@ -38,15 +39,16 @@ final class WebsiteUtils {
    private static final File BUILD_DIR = new File("build");
    static final File WEB_SRC_DIR = new File("web");
    static final File DOCS_OUTPUT_DIR = new File(BUILD_DIR, "docs");
-   static final File BOOTSTRAP_FILE = new File("../projog/src/main/resources/projog-bootstrap.pl");
-   static final File EXTRACTED_PREDICATE_TESTS_DIR = new File("../projog/target/prolog-predicate-tests-extracted-from-java");
-   static final File EXTRACTED_OPERATOR_TESTS_DIR = new File("../projog/target/prolog-operator-tests-extracted-from-java");
-   static final File SCRIPTS_OUTPUT_DIR = new File("../projog/src/test/prolog");
+   static final File BOOTSTRAP_FILE = new File(PROJOG_MASTER, "src/main/resources/projog-bootstrap.pl");
+   static final File EXTRACTED_PREDICATE_TESTS_DIR = new File(BUILD_DIR, "prolog-predicate-tests-extracted-from-java");
+   static final File EXTRACTED_OPERATOR_TESTS_DIR = new File(BUILD_DIR, "prolog-operator-tests-extracted-from-java");
+   static final File CORE_SOURCE_DIR = new File(PROJOG_MASTER, "src/main/java");
+   static final File SCRIPTS_OUTPUT_DIR = new File(PROJOG_MASTER, "src/test/prolog");
    static final File MANUAL_TEMPLATE = new File(WEB_SRC_DIR, "manual.txt");
    static final File STATIC_PAGES_LIST = new File(WEB_SRC_DIR, "static_pages.properties");
    static final File COMMANDS_INDEX_FILE = new File(DOCS_OUTPUT_DIR, "prolog-predicates.html");
-   static final String SOURCE_INPUT_DIR_NAME = "../projog/src/main/java/";
-   static final File SOURCE_INPUT_DIR = new File(SOURCE_INPUT_DIR_NAME);
+   static final File SOURCE_INPUT_DIR = new File(PROJOG_MASTER, "src/main/java");
+   static final String SOURCE_INPUT_DIR_NAME = SOURCE_INPUT_DIR.getPath() + "/";
    static final File BUILTIN_PREDICATES_PACKAGE_DIR = new File(SOURCE_INPUT_DIR, BUILTIN_PREDICATES_PACKAGE_NAME.replace('.', File.separatorChar));
    static final String LINE_BREAK = "\n";
    static final String HTML_FILE_EXTENSION = ".html";

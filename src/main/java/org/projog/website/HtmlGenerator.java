@@ -17,6 +17,7 @@ package org.projog.website;
 
 import static org.projog.website.BuiltInPredicatesIndexPage.produceBuiltInPredicatesIndexPage;
 import static org.projog.website.WebsiteUtils.BUILTIN_PREDICATES_PACKAGE_DIR;
+import static org.projog.website.WebsiteUtils.CORE_SOURCE_DIR;
 import static org.projog.website.WebsiteUtils.DOCS_OUTPUT_DIR;
 import static org.projog.website.WebsiteUtils.EXTRACTED_OPERATOR_TESTS_DIR;
 import static org.projog.website.WebsiteUtils.EXTRACTED_PREDICATE_TESTS_DIR;
@@ -33,6 +34,7 @@ import static org.projog.website.WebsiteUtils.readAllLines;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -41,6 +43,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import org.projog.test.ProjogTestExtractor;
+import org.projog.test.ProjogTestExtractorConfig;
 
 /**
  * Produces all HTML pages that make up the web-site.
@@ -62,6 +67,8 @@ public final class HtmlGenerator {
       HEADER_AFTER_TITLE = header.substring(titlePos);
       DOCS_OUTPUT_DIR.mkdir();
    }
+   private static final String BUILTIN_PREDICATES_PACKAGE = "org.projog.core.predicate.builtin";
+   private static final String BUILTIN_OPERATORS_PACKAGE = "org.projog.core.math.builtin";
    private static String VERSION;
 
    public static void main(final String[] args) throws Exception {
@@ -70,7 +77,32 @@ public final class HtmlGenerator {
       }
       VERSION = args[0];
 
+      extractExamples(EXTRACTED_PREDICATE_TESTS_DIR, BUILTIN_PREDICATES_PACKAGE);
+      extractExamples(EXTRACTED_OPERATOR_TESTS_DIR, BUILTIN_OPERATORS_PACKAGE);
       generateHtml();
+   }
+
+   /**
+    * Extract Prolog examples from Java source code of projog-core.
+    *
+    * @param outputDir the directory to write the examples to
+    * @param packageName the package name that source files must be located under to be extracted
+    */
+   private static void extractExamples(File outputDir, String packageName) {
+      ProjogTestExtractorConfig config = new ProjogTestExtractorConfig();
+      config.setJavaRootDirectory(CORE_SOURCE_DIR);
+      config.setPrologTestsDirectory(outputDir);
+      config.setRequireJavadoc(true);
+      config.setRequireTest(true);
+      config.setFileFilter(new FileFilter() {
+         @Override
+         public boolean accept(File f) {
+            String name = f.getPath().replace(File.separatorChar, '.');
+            System.out.println(f + " " + name + " " + name.contains(packageName));
+            return name.contains(packageName);
+         }
+      });
+      ProjogTestExtractor.extractTests(config);
    }
 
    /**
@@ -117,6 +149,9 @@ public final class HtmlGenerator {
             String packageName = dir.getPath().substring(SOURCE_INPUT_DIR_NAME.length()).replace(File.separatorChar, '.');
             packageDescriptions.put(packageName, parsePackageInfo(packageInfo));
          }
+      }
+      if (packageDescriptions.isEmpty()) {
+         throw new RuntimeException("No package descriptions found in " + BUILTIN_PREDICATES_PACKAGE_DIR);
       }
       return packageDescriptions;
    }

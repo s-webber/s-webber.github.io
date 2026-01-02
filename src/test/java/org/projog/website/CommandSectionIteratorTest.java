@@ -64,7 +64,7 @@ public class CommandSectionIteratorTest {
          itr.next();
          fail();
       } catch (RuntimeException e) {
-         assertEquals("Cannot find description for: org.projog.qwe", e.getMessage());
+         assertEquals("Cannot find description for: org.projog.qwe in []", e.getMessage());
       }
    }
 
