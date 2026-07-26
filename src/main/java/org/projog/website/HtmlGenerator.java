@@ -23,6 +23,7 @@ import static org.projog.website.WebsiteUtils.EXTRACTED_OPERATOR_TESTS_DIR;
 import static org.projog.website.WebsiteUtils.EXTRACTED_PREDICATE_TESTS_DIR;
 import static org.projog.website.WebsiteUtils.FOOTER_HTML;
 import static org.projog.website.WebsiteUtils.HEADER_HTML;
+import static org.projog.website.WebsiteUtils.HTML_FILE_EXTENSION;
 import static org.projog.website.WebsiteUtils.LINE_BREAK;
 import static org.projog.website.WebsiteUtils.MANUAL_HTML;
 import static org.projog.website.WebsiteUtils.SCRIPTS_OUTPUT_DIR;
@@ -39,10 +40,15 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.projog.test.ProjogTestExtractor;
 import org.projog.test.ProjogTestExtractorConfig;
@@ -69,6 +75,8 @@ public final class HtmlGenerator {
    }
    private static final String BUILTIN_PREDICATES_PACKAGE = "org.projog.core.predicate.builtin";
    private static final String BUILTIN_OPERATORS_PACKAGE = "org.projog.core.math.builtin";
+   private static final String WEBSITE_BUILD_DATETIME = ZonedDateTime.now(ZoneId.of("Europe/London")).toString();
+   private static final Pattern LINK_TARGET_REGEX = Pattern.compile("href\\s*=\\s*['\"]([^'\"]+)['\"]", Pattern.CASE_INSENSITIVE);
    private static String VERSION;
 
    public static void main(final String[] args) throws Exception {
@@ -80,6 +88,7 @@ public final class HtmlGenerator {
       extractExamples(EXTRACTED_PREDICATE_TESTS_DIR, BUILTIN_PREDICATES_PACKAGE);
       extractExamples(EXTRACTED_OPERATOR_TESTS_DIR, BUILTIN_OPERATORS_PACKAGE);
       generateHtml();
+      checkInternalLinks();
    }
 
    /**
@@ -98,7 +107,6 @@ public final class HtmlGenerator {
          @Override
          public boolean accept(File f) {
             String name = f.getPath().replace(File.separatorChar, '.');
-            System.out.println(f + " " + name + " " + name.contains(packageName));
             return name.contains(packageName);
          }
       });
@@ -315,7 +323,7 @@ public final class HtmlGenerator {
    }
 
    private static String tokenFilter(CharSequence content) {
-      return content.toString().replace("@PROJOG_VERSION@", VERSION);
+      return content.toString().replace("@PROJOG_VERSION@", VERSION).replace("@WEBSITE_BUILD_DATETIME@", WEBSITE_BUILD_DATETIME);
    }
 
    private static String removeHtmlMarkup(String input) {
@@ -334,5 +342,34 @@ public final class HtmlGenerator {
          System.out.println("CANNOT READ: " + f.getAbsolutePath());
          throw new RuntimeException(e);
       }
+   }
+
+   /** Check links of all pages. Throw exception if find link to an internal page that doesn't exist. */
+   private static void checkInternalLinks() throws IOException {
+      for (File f : DOCS_OUTPUT_DIR.listFiles(f -> f.getName().endsWith(HTML_FILE_EXTENSION))) {
+         checkInternalLinks(f);
+      }
+   }
+
+   private static void checkInternalLinks(File f) throws IOException {
+      String html = Files.readString(f.toPath());
+      Matcher matcher = LINK_TARGET_REGEX.matcher(html);
+
+      while (matcher.find()) {
+         // exclude fragment from target if present (# and everything after it)
+         String target = matcher.group(1).split("\\#")[0];
+
+         if (isInternalLink(target)) {
+            if (!new File(DOCS_OUTPUT_DIR, target).exists()) {
+               // TODO throw exception instead of printing warning
+               System.out.println("WARNING: " + f.getName() + " contains link to " + target);
+               System.out.println();
+            }
+         }
+      }
+   }
+
+   private static boolean isInternalLink(String target) {
+      return !target.startsWith("http:") && !target.startsWith("https:");
    }
 }

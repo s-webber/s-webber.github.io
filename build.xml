@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<project name="projog" default="release-website">
-	<property name="version" value="0.11.0"/>
+<project name="projog-website" default="release-website">
+	<property name="projog-core-version" value="0.11.0"/>
 	<property name="projog-clp-version" value="0.3.0"/>
 	<property name="projog-test-version" value="0.5.0"/>
-	<property name="release-dir" value="projog-${version}"/>
+	<property name="release-dir" value="projog-${projog-core-version}"/>
 	<property name="javac-target" value="1.8"/>
 	<property name="maven-url" value="http://search.maven.org/remotecontent?filepath="/>
 
@@ -17,10 +17,10 @@
 
 	<property name="projog-github-url" value="https://github.com/s-webber/projog/archive/refs/heads/master.zip"/>
 	<property name="projog-core-dir" value="build/projog-master"/>
-	<property name="projog-core-url" value="${maven-url}org/projog/projog-core/${version}/projog-core-${version}.jar"/>
-	<property name="projog-core-jar" value="lib/projog-core-${version}.jar"/>
-	<property name="projog-core-javadoc-url" value="${maven-url}org/projog/projog-core/${version}/projog-core-${version}-javadoc.jar"/>
-	<property name="projog-core-javadoc-jar" value="build/projog-core-${version}-javadoc.jar"/>
+	<property name="projog-core-url" value="${maven-url}org/projog/projog-core/${projog-core-version}/projog-core-${projog-core-version}.jar"/>
+	<property name="projog-core-jar" value="lib/projog-core-${projog-core-version}.jar"/>
+	<property name="projog-core-javadoc-url" value="${maven-url}org/projog/projog-core/${projog-core-version}/projog-core-${projog-core-version}-javadoc.jar"/>
+	<property name="projog-core-javadoc-jar" value="build/projog-core-${projog-core-version}-javadoc.jar"/>
 	<property name="projog-clp-url" value="${maven-url}org/projog/projog-clp/${projog-clp-version}/projog-clp-${projog-clp-version}.jar"/>
 	<property name="projog-clp-jar" value="lib/projog-clp-${projog-clp-version}.jar"/>
 	<property name="projog-test-jar" value="lib/projog-test-${projog-test-version}.jar"/>
@@ -113,12 +113,11 @@
 				<include name="*.css"/>
 				<include name="favicon.ico"/>
 				<include name="robots.txt"/>
-				<include name=".htaccess"/>
 			</fileset>
 		</copy>
 		<unzip src="${projog-core-javadoc-jar}" dest="build/docs/javadoc"/>
 		<java classname="org.projog.website.HtmlGenerator" failonerror="true" fork="true">
-			<arg value="${version}"/>
+			<arg value="${projog-core-version}"/>
 			<classpath>
 				<pathelement location="${projog-core-jar}"/>
 				<pathelement location="${projog-test-jar}"/>

@@ -37,7 +37,6 @@ import java.util.TreeSet;
 import org.projog.core.predicate.PredicateKey;
 import org.projog.core.predicate.builtin.kb.AddPredicateFactory;
 import org.projog.core.term.Atom;
-import org.projog.core.term.IntegerNumber;
 import org.projog.core.term.StructureFactory;
 import org.projog.core.term.Term;
 
