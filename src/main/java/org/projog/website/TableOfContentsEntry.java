@@ -19,7 +19,7 @@ package org.projog.website;
  * Represents a line of the {@code manual.html} page of the website.
  * <p>
  * Each {@code TableOfContentsEntry} represents a header, description or link contained in
- * <a href="http://www.projog.org/manual.html">manual.html<a>.
+ * <a href="https://projog.org/manual.html">manual.html<a>.
  * </p>
  */
 final class TableOfContentsEntry {

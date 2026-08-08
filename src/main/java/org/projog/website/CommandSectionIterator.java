@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * Returns {@code TableOfContentsEntry} instances that make up the "Prolog Commands" section of
- * <a href="http://www.projog.org/manual.html">manual.html<a>.
+ * <a href="https://projog.org/manual.html">manual.html<a>.
  */
 final class CommandSectionIterator {
    private final List<CodeExampleWebPage> indexOfGeneratedPages;

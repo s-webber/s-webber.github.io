@@ -1,9 +1,9 @@
 Projog - an implementation of the Prolog logic programming language for the Java platform.
-http://www.projog.org/
+https://projog.org/
 
 * Documentation:
 
-To access the manual please visit: http://www.projog.org/manual.html
+To access the manual please visit: https://projog.org/manual.html
 
 * Launching the console:
 

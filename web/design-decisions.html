@@ -1,5 +1,5 @@
 <p>
-Below is a review of some of the decisions made in the development of <a href="https://www.projog.org/" title="Prolog logic programming language for the Java platform">Projog</a>.
+Below is a review of some of the decisions made in the development of <a href="https://projog.org/" title="Prolog logic programming language for the Java platform">Projog</a>.
 </p>
 
 <h3>Java</h3>
@@ -19,7 +19,7 @@ The benefits of a programming language targeting the JVM include:
 <p>
 The configuration of built-in predicates and arithmetic operators is configured using dependency injection, a form of Inversion of Control.
 The <a href="https://raw.githubusercontent.com/s-webber/projog/master/src/main/resources/projog-bootstrap.pl">projog-bootstrap.pl</a> file
-contains rules and facts that are executed when a <a href="https://www.projog.org/javadoc/org/projog/core/kb/KnowledgeBase.html" title="org.projog.core.kb.KnowledgeBase"><code>KnowledgeBase</code></a> is created.
+contains rules and facts that are executed when a <a href="https://projog.org/javadoc/org/projog/core/kb/KnowledgeBase.html" title="org.projog.core.kb.KnowledgeBase"><code>KnowledgeBase</code></a> is created.
 This dependency injection mechanism makes it possible to extend Projog with new functionality without having to modify the existing inference engine code.
 It is possible for developers to specify an alternative to the default <code>projog-bootstrap.pl</code> file.
 This allows projects that depend on Projog to be configured with a unique set of built-in predicates specific to the particular problem the project is trying to solve.
@@ -36,9 +36,9 @@ and versions used by other parts of any project it was being integrated with.
 
 <h3>Numbers</h3>
 <p>
-Projog provides two number types - <a href="https://www.projog.org/javadoc/org/projog/core/term/IntegerNumber.html" title="org.projog.core.term.IntegerNumber"><code>IntegerNumber</code></a> and <a href="https://www.projog.org/javadoc/org/projog/core/term/DecimalFraction.html" title="org.projog.core.term.DecimalFraction"><code>DecimalFraction</code></a>.
-The <a href="https://www.projog.org/javadoc/org/projog/core/term/IntegerNumber.html" title="org.projog.core.term.IntegerNumber"><code>IntegerNumber</code></a> class represents numbers using a <code>long</code> primitive 
-and the <a href="https://www.projog.org/javadoc/org/projog/core/term/DecimalFraction.html" title="org.projog.core.term.DecimalFraction"><code>DecimalFraction</code></a> class represents numbers using a <code>double</code> primitive.
+Projog provides two number types - <a href="https://projog.org/javadoc/org/projog/core/term/IntegerNumber.html" title="org.projog.core.term.IntegerNumber"><code>IntegerNumber</code></a> and <a href="https://projog.org/javadoc/org/projog/core/term/DecimalFraction.html" title="org.projog.core.term.DecimalFraction"><code>DecimalFraction</code></a>.
+The <a href="https://projog.org/javadoc/org/projog/core/term/IntegerNumber.html" title="org.projog.core.term.IntegerNumber"><code>IntegerNumber</code></a> class represents numbers using a <code>long</code> primitive 
+and the <a href="https://projog.org/javadoc/org/projog/core/term/DecimalFraction.html" title="org.projog.core.term.DecimalFraction"><code>DecimalFraction</code></a> class represents numbers using a <code>double</code> primitive.
 As numbers in Projog are represented using Java primitive types, calculations that use them are subject to overflow and loss of precision behaviour. e.g.:
 </p>
 
@@ -76,11 +76,11 @@ Projog can be used to run Prolog code from Java.
 Java can be used to extend the functionality Projog makes available from Prolog code.
 </p>
 <p>
-The <a href="https://www.projog.org/javadoc/org/projog/api/Projog.html" title="org.projog.api.Projog"><code>Projog</code></a> class provides a convenient API for interacting with Projog from Java.
-The Projog API is <a href="https://www.projog.org/calling-prolog-from-java.html">documented</a>, proven (the same API is used by the system tests) and familiar (it uses a similar approach to the JDBC API).
+The <a href="https://projog.org/javadoc/org/projog/api/Projog.html" title="org.projog.api.Projog"><code>Projog</code></a> class provides a convenient API for interacting with Projog from Java.
+The Projog API is <a href="https://projog.org/calling-prolog-from-java.html">documented</a>, proven (the same API is used by the system tests) and familiar (it uses a similar approach to the JDBC API).
 </p>
 <p>
-The approach for using Java to add new predicates is <a href="https://www.projog.org/extending-prolog-with-java.html">documented</a>, proven (it is the same mechanism used to add the existing functionality provided by Projog) and allows Projog to be extendable without the need for modification.
+The approach for using Java to add new predicates is <a href="https://projog.org/extending-prolog-with-java.html">documented</a>, proven (it is the same mechanism used to add the existing functionality provided by Projog) and allows Projog to be extendable without the need for modification.
 The addition of new functionality to Projog is aided by:
 <ul>
 <li>A <a href="test-framework.html">test framework</a> that was specifically created to support the documentation generation and unit testing of all predicates as part of an automated build process.</li>
@@ -88,7 +88,7 @@ The addition of new functionality to Projog is aided by:
 </ul>
 </p>
 <p>
-To aid further integration between Projog and Java a new "Java object" <a href="https://www.projog.org/javadoc/org/projog/core/term/TermType.html" title="org.projog.core.term.TermType"><code>TermType</code></a> could be introduced.
+To aid further integration between Projog and Java a new "Java object" <a href="https://projog.org/javadoc/org/projog/core/term/TermType.html" title="org.projog.core.term.TermType"><code>TermType</code></a> could be introduced.
 This would allow Java objects to be used as arguments in Prolog queries - in the same way that atoms, numbers and lists currently are.
 </p>
 
@@ -106,7 +106,7 @@ While the unit tests are good for testing discrete parts of the code the system 
 <ul>
 <li><i>Concise</i> - The concise syntax used to construct the system tests make them quick to write and their intent clear. </li>
 <li><i>Comprehensive</i> - Each system test covers the full execution process including the parsing of Prolog queries, unification, backtracking and the generation of results.</li>
-<li><i>Consistent</i> - The system test framework uses the <a href="https://www.projog.org/calling-prolog-from-java.html">Projog API</a> to interact with Projog.</li>
+<li><i>Consistent</i> - The system test framework uses the <a href="https://projog.org/calling-prolog-from-java.html">Projog API</a> to interact with Projog.</li>
 </ul>
 </p>
 <p>
@@ -121,14 +121,14 @@ which was created for <a href="https://github.com/s-webber/projog/issues/113">th
 which led to <a href="https://github.com/s-webber/projog/commit/749f29db7b4e509d7308cbce6afc9f28461e5c9d">this change</a>.
 </p>
 <p>
-The built-in predicates (i.e. implementations of <a href="https://www.projog.org/javadoc/org/projog/core/predicate/PredicateFactory.html" title="org.projog.core.predicate.PredicateFactory"><code>PredicateFactory</code></a>) that exist in the Projog code base are only tested by system tests, they do not have corresponding unit tests.
+The built-in predicates (i.e. implementations of <a href="https://projog.org/javadoc/org/projog/core/predicate/PredicateFactory.html" title="org.projog.core.predicate.PredicateFactory"><code>PredicateFactory</code></a>) that exist in the Projog code base are only tested by system tests, they do not have corresponding unit tests.
 I feel that the concise nature of the system tests is more suitable for testing the built-in predicates than JUnit tests would be.
 I think having both system tests <i>and</i> unit tests for each of these items would require a significant effort and duplication without increasing confidence in the code.
 </p>
 
 <h3>Documentation</h3>
 <p>
-There are two distinct types of documentation provided by Projog - <a href="https://www.projog.org/javadoc/">Javadoc</a> and the website's <a href="https://www.projog.org/manual.html">manual</a>.
+There are two distinct types of documentation provided by Projog - <a href="https://projog.org/javadoc/">Javadoc</a> and the website's <a href="https://projog.org/manual.html">manual</a>.
 </p>
 <p>
 Javadoc is an established approach to documenting Java code using comments in the source code.
@@ -142,7 +142,7 @@ PlantUML allows diagrams to be expressed in a textual form which, compared to us
 </p>
 <p>
 The Javadoc comments and system tests are used to automatically generate the website's documentation of built-in predicates.
-For example, the <a href="https://raw.githubusercontent.com/s-webber/projog/master/src/main/java/org/projog/core/predicate/builtin/compare/Between.java">Between.java</a> file gets automatically transformed into the <a href="https://www.projog.org/Between.html">Between.html</a> file as part of the build process.
+For example, the <a href="https://raw.githubusercontent.com/s-webber/projog/master/src/main/java/org/projog/core/predicate/builtin/compare/Between.java">Between.java</a> file gets automatically transformed into the <a href="https://projog.org/Between.html">Between.html</a> file as part of the build process.
 The use of Javadoc comments and system tests, rather than maintaining a seperate set of documentation, promotes consistency and saves time.
 As the documentation contains the actual output of running the system tests then we can have confidence the documentation provides a correct account of how the code works.
 </p>

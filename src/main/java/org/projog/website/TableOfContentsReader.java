@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Reads {@link WebsiteUtils#MANUAL_TEMPLATE} to determine the {@code TableOfContentsEntry} instances required to
- * construct <a href="http://www.projog.org/manual.html">manual.html<a>.
+ * construct <a href="https://projog.org/manual.html">manual.html<a>.
  */
 final class TableOfContentsReader {
    private final TableOfContentsEntryFactory entryFactory;
