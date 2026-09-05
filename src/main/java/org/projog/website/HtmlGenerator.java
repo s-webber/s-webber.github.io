@@ -361,9 +361,7 @@ public final class HtmlGenerator {
 
          if (isInternalLink(target)) {
             if (!new File(DOCS_OUTPUT_DIR, target).exists()) {
-               // TODO throw exception instead of printing warning
-               System.out.println("WARNING: " + f.getName() + " contains link to " + target);
-               System.out.println();
+               throw new RuntimeException(f.getName() + " contains link to " + target);
             }
          }
       }
